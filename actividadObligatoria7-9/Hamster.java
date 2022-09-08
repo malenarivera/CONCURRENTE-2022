@@ -7,21 +7,12 @@ package universidad.concurrente.tp3;
 
 /**
  *
- * @author male_
+ * @authorGRUPO 7
+ * TORRES, ANTONELLA
+ * VALDESOLO, MATEO
+ * RIVERA, MALENA
  */
 public class Hamster implements Runnable {
-//    private Jaula j;
-//    
-//    public Hamster(Jaula j){
-//        this.j=j;
-//    }
-//
-//    @Override
-//    public void run() {
-//        j.usarHamaca();
-//        j.usarPlato();
-//        j.usarRueda();
-//     }
     Rueda r= new Rueda();
     Comida c= new Comida();
     Hamaca h= new Hamaca();
@@ -34,28 +25,13 @@ public class Hamster implements Runnable {
     }
     
     
+    @Override
     public void run(){
-        while(!h.ocupado()){
-           this.simularTiempo();
-           h.dejoDeUsar();
-        }
-        
-        while(!r.ocupado()){
-            this.simularTiempo();
-            r.dejoDeUsar();
-        }
-        while(!c.ocupado()){
-            this.simularTiempo();
-            c.dejoDeUsar();
-        }
-    }
+      r.realizarActividad();
+      h.realizarActividad();
+      c.realizarActividad();
     
- private void simularTiempo(){
-     try {
-          Thread.sleep(1000);
-     } catch (Exception e) {
-     }
- }
+    }
     
     
 }
