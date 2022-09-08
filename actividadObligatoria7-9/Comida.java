@@ -7,17 +7,14 @@ package universidad.concurrente.tp3;
 
 /**
  *
- * @author male_
+ * @author GRUPO 7
+ * TORRES, ANTONELLA
+ * VALDESOLO, MATEO
+ * RIVERA, MALENA
  */
 public class Comida {
-    private boolean noEnUso=true;
     
-       public synchronized boolean ocupado(){
-           if(noEnUso){
-               this.usar();
-           }
-           return noEnUso;
-       }
+       
     
     public synchronized void realizarActividad(){
         System.out.println(Thread.currentThread().getName()+ " esta usando el plato de COMIDA");
@@ -28,13 +25,5 @@ public class Comida {
             
         }
     }
-     public synchronized void usar(){
-        noEnUso=false;
-    }
-    
-    public synchronized void dejoDeUsar(){
-        noEnUso=true;
-        System.out.println(Thread.currentThread().getName()+" termino de usar el plato");
-    }
-    
+   
 }
