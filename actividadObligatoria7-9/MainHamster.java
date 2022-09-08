@@ -21,9 +21,6 @@ public class MainHamster {
         private static Comida c= new Comida();
           
     public static void main(String[] args) {
-//        Rueda r= new Rueda();
-//        Hamaca h= new Hamaca();
-//        Comida c= new Comida();
           System.out.println("Cuantos hamsters?");
           cantHamsters= TecladoIn.readLineInt();
           crearHamsters();
