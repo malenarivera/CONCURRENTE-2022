@@ -7,18 +7,14 @@ package universidad.concurrente.tp3;
 
 /**
  *
- * @author male_
+ * @author GRUPO 7
+ * TORRES, ANTONELLA
+ * VALDESOLO, MATEO
+ * RIVERA, MALENA
  */
 public class Hamaca {
-    private boolean noEnUso=true;
     
-       public synchronized boolean ocupado(){
-           if(noEnUso){
-               this.usar();
-           }
-           return noEnUso;
-       }
-    
+      
     public synchronized void realizarActividad(){
         System.out.println(Thread.currentThread().getName()+ " esta descansando en la HAMACA");
         try{
@@ -26,16 +22,7 @@ public class Hamaca {
              System.out.println(Thread.currentThread().getName()+ " termino de descansar en la HAMACA");
         }catch(InterruptedException e){
             
+     
         }
     }
-    
-     public synchronized void usar(){
-        noEnUso=false;
-    }
-    
-    public synchronized void dejoDeUsar(){
-        System.out.println(Thread.currentThread().getName()+" termino de descansar en la hamaca");
-        noEnUso=true;
-    }
-    
 }
