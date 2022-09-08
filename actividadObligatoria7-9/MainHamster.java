@@ -9,10 +9,13 @@ import utiles.TecladoIn;
 
 /**
  *
- * @author male_
+ * @author GRUPO 7
+ * TORRES, ANTONELLA
+ * VALDESOLO, MATEO
+ * RIVERA, MALENA
+
  */
 public class MainHamster {
-        private static Jaula j= new Jaula();
         private static int cantHamsters;
         private static Hamster [] hamsters;
         private static Thread [] th;
