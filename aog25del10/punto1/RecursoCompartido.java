@@ -16,10 +16,9 @@ import java.util.concurrent.Semaphore;
  * VALDESOLO, MATEO
  * RIVERA, MALENA
  */
-public class RecursoCompartido {
-    private Semaphore lugaresTransbordador; //los lugares del transbordador
-    private Semaphore viaje;// para q los autos no se bajen antes de llegar
-    private Semaphore comienzaViajeTransbordador; //para avisarle al transbordador cuando puede empezar su viaje
+public class RecursoCompartido {   private Semaphore lugaresTransbordador; //para simular los lugares que habra en el transbordador
+    private Semaphore viaje;// usado como comunicacion entre el transbordador y los autos
+    private Semaphore comienzaViajeTransbordador; //para avisarle al transbordador cuando puede empezar su viaje, tmb es de comunicacion entre autos-transbordador
     private int cantAutosMax=10; //la cantidad de autos maxima que puede haber en el transbordador, el enunciado dice 10
     
     
@@ -30,27 +29,27 @@ public class RecursoCompartido {
     }
     
     public void iniciarViaje(){
-        //metodo que usa el transbordador par iniciar su viaje
-        //agarra los 10 permisos y se queda bloqueado hasta q los consigue
+        //metodo que usa el transbordador para iniciar su viaje
+        //hasta que no consiga la cantAutosMax permisos no puede comenzar el viaje
         try {
-            comienzaViajeTransbordador.acquire(10);
+            comienzaViajeTransbordador.acquire(cantAutosMax);
         } catch (Exception e) {
         }
     }
     
     public void llegaADestino(){
-        //metodo que usa el transbordador para avisar a los autos que ya se pueden bajar
+        //metodo que usa el transbordador para avisarle a los autos que ya se pueden bajar
         viaje.release(cantAutosMax);
     }
     
     public void terminoVuelta(){
         //metodo que usa el transbordador para avisar a los autos que ya termino de volver vacio
-        //libera los permisos por lo cual los autos que no puedieron subir antes se quedaron trabados
         lugaresTransbordador.release(cantAutosMax);
     }
     
     public void agarroPermiso(){
         //metodo que usa el auto para agarrar un lugar en el transbordador
+        //si no hay mas permisos se quedan trabados hasta que el transbordador vuelva vacio
         try {
             lugaresTransbordador.acquire();
         } catch (Exception e) {
@@ -72,7 +71,6 @@ public class RecursoCompartido {
     public void bajarse(){
         //metodo que usa el auto para intentar bajarse
         //los que suban van a quedarse bloqueados esperando a que el transbordador libere los permisos cuando llege a destino
-        
         try {
             viaje.acquire();
         } catch (Exception e) {
