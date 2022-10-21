@@ -32,7 +32,7 @@ public void run(){
 
 private void simularViaje(){
     try {
-        System.out.println(Thread.currentThread().getName()+": Comienzo viaje del lado oeste");
+        System.out.println(Thread.currentThread().getName()+": Comienzo viaje al lado oeste");
         Thread.sleep(1000);
     } catch (Exception e) {
     }
