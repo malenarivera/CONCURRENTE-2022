@@ -16,7 +16,8 @@ import java.util.concurrent.Semaphore;
  * VALDESOLO, MATEO
  * RIVERA, MALENA
  */
-public class RecursoCompartido {   private Semaphore lugaresTransbordador; //para simular los lugares que habra en el transbordador
+public class RecursoCompartido {   
+    private Semaphore lugaresTransbordador; //para simular los lugares que habra en el transbordador
     private Semaphore viaje;// usado como comunicacion entre el transbordador y los autos
     private Semaphore comienzaViajeTransbordador; //para avisarle al transbordador cuando puede empezar su viaje, tmb es de comunicacion entre autos-transbordador
     private int cantAutosMax=10; //la cantidad de autos maxima que puede haber en el transbordador, el enunciado dice 10
