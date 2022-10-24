@@ -9,13 +9,14 @@ import java.util.concurrent.Semaphore;
 
 /**
  *
- * @author male_
+ * @author  GRUPO 7
+ * TORRES, ANTONELLA
+ * VALDESOLO, MATEO
+ * RIVERA, MALENA
  */
-public class Reloj {
-    private int trabajadorActual;//puntero indica la pos en la que debe hacer el release y el 2 el acquire
-    private Semaphore [] semTrabajadores;
-    private int cantTrabajadores;
-    private Semaphore semDormir;
+public class Reloj { private Semaphore [] semTrabajadores; //cada trabajador va a tener un semaforo asociado
+    private int cantTrabajadores; //para no pasarse de largo en el arreglo
+    private Semaphore semDormir; // para avisarle a control reloj cuando se levantaron todos
 
 
 
@@ -29,20 +30,21 @@ public class Reloj {
     }
 
     public void despertarPrimerHilo(){
+        //levanta al primer trabajador
         semTrabajadores[0].release();
-        trabajadorActual=0;
        
     }
     
-    public void despertarPana(){
-        if (trabajadorActual<(cantTrabajadores-1)){
-            //levanto a mi pana
-            trabajadorActual++;
-            semTrabajadores[trabajadorActual].release();
-        }
+    public void despertarPana(int nroTrabajador){
+        //le avisa a su hermano q se tiene q levantar
+        //esto lo hace liberando el permiso
+        if(nroTrabajador<(cantTrabajadores-1))
+            semTrabajadores[nroTrabajador+1].release();
+        
       
     }
     public void despertarme(int nroTrabajador){
+        //cada trabajador se queda esperando en su semaforo correspondiente
         try {
             semTrabajadores[nroTrabajador].acquire();
         } catch (InterruptedException e) {
@@ -51,6 +53,7 @@ public class Reloj {
 
     }
     public void esperarZZZ(){
+        //se queda esperando hasta q todos se levanten 
         try {
             semDormir.acquire(cantTrabajadores);
         } catch (InterruptedException e) {
@@ -59,6 +62,7 @@ public class Reloj {
         }
     }
     public void aMimir(){
+        //le avisa a controlReloj q se levanto
         semDormir.release();
     }
 }
