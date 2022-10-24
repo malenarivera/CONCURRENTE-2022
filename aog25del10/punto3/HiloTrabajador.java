@@ -26,8 +26,8 @@ public class HiloTrabajador implements Runnable {
         while (true){
             r.despertarme(nroTrabajador);
             System.out.println(Thread.currentThread().getName()+ ": Me levanté");
-            r.despertarPana(nroTrabajador);
             System.out.println(Thread.currentThread().getName()+ ": Levanto a mi panita");
+            r.despertarPana(nroTrabajador);
             if (this.esHoraTrabajo()){
                System.out.println(Thread.currentThread().getName()+ ": es mi hora de trabajo");
                this.simularTrabajo();
