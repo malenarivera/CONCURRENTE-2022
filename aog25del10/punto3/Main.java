@@ -9,7 +9,10 @@ import java.util.Scanner;
 
 /**
  *
- * @author male_
+ * @author  GRUPO 7
+ * TORRES, ANTONELLA
+ * VALDESOLO, MATEO
+ * RIVERA, MALENA
  */
 public class Main {
      public static void main(String[] args) {
