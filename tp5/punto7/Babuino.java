@@ -12,33 +12,39 @@ import java.util.Random;
  * @author male_
  */
 public class Babuino implements Runnable{
-    private Puente p;
-    public Babuino (Puente p){
-        this.p=p;
+    
+      private char lado;
+    private Cuerda c;
+
+    public Babuino (char lado, Cuerda c){
+        this.lado= lado;
+        this.c=c;
     }
+
     public void run (){
-        Random r= new Random();
-        if (r.nextInt(2)==0){
-            System.out.println(Thread.currentThread().getName() + " QUIERE PASAR DE LA IZQ");
-            p.pasar('I');
-        }
-        else{
-            System.out.println(Thread.currentThread().getName() + " QUIERE PASAR DE LA DER");
-            p.pasar('D');
-        }
-        System.out.println(Thread.currentThread().getName()+ ": PASANDOOOOOOO");
+        c.setearPrioridadBabuino(lado);
+        c.entrar(lado);
+        this.pasando();
+        c.irse(lado);
+
+
+
+
+    }
+    public void pasando (){
         try {
+            System.out.println(Thread.currentThread().getName()+" PASANDOOOO");
             Thread.sleep(100);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(Thread.currentThread().getName()+": Me fui");
-        p.irse();
-
-
     }
 
+
+
 }
+
+
     
 
