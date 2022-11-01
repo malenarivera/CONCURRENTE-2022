@@ -15,7 +15,7 @@ public class Persona implements Runnable{
     
     public Persona(Sala sala){
         this.sala=sala;
-        soyJubilado= (int) (Math.random()*2);
+        soyJubilado= (int) (Math.random()*5);
     }
     
     public void run(){
@@ -29,7 +29,7 @@ public class Persona implements Runnable{
     
     private void simularTiempoAdentroSala(){
         try {
-            Thread.sleep(4000);
+            Thread.sleep(40000);
         } catch (Exception e) {
         }
     }
