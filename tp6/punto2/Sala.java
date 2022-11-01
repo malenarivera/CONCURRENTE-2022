@@ -28,6 +28,7 @@ public void entrarSala(){
     while(cantPersonas>cantMaxPersonas){
         System.out.println(Thread.currentThread().getName()+": Debe esperar");
         try {
+            //yo espero siempre si total siempre pasan primero los jubilados
             normal.await();
         } catch (InterruptedException ex) {
         }
@@ -39,9 +40,11 @@ public void entrarSala(){
 
 public void salirSala(){
     mutexEntrar.lock();
-    System.out.println("Se va de la sala!");
+    System.out.println(Thread.currentThread().getName()+": Se va de la sala!");
+    //si hay jubilados esperando, les doy la prioridad
     if(cantPersonasJubiladasEsperando>0)
         jubilado.signal();
+    //SINO BUENO, CHAU LOCO, SUERTE
     else
         normal.signal();
     cantPersonas--;
@@ -54,10 +57,12 @@ public void entrarJubilado(){
         System.out.println(Thread.currentThread().getName()+": Soy jubilado y espero uwu");
         cantPersonasJubiladasEsperando++;
         try {
+            //espero a q me avisen q puedo entrar ja ja
             jubilado.await();
         } catch (InterruptedException ex) {
         }
     }
+    //si estaba esperando bueno ahora ya no ja ja listo q capa q soy
     if(cantPersonasJubiladasEsperando>0){
         cantPersonasJubiladasEsperando--;
     }
@@ -67,12 +72,14 @@ public void entrarJubilado(){
 }
 
 public void notificarTemperatura (int temp){
+  //IGUAL ESTO ME TIRA ERROR DE MONITOR Y RE Q SON LOCKS ???? PERO BUENO CADA UNO A ESTA ALTURA DEL AÑO HACE LO Q QUIERE
     if(temp>tUmbral){
         System.out.println("Se paso el umbral, cambio la cant personas a 35");
         cantMaxPersonas=35;
     }else{
         System.out.println("Se vuelve a la temperatura normal!!");
         cantMaxPersonas=50;
+        //loco q pesados los jubilados todo el tiempo hay q avisarles
         if(cantPersonasJubiladasEsperando>0)
             jubilado.signalAll();
         normal.signalAll();
