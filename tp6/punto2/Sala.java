@@ -45,8 +45,7 @@ public void salirSala(){
     if(cantPersonasJubiladasEsperando>0)
         jubilado.signal();
     //SINO BUENO, CHAU LOCO, SUERTE
-    else
-        normal.signal();
+    normal.signal();
     cantPersonas--;
     mutexEntrar.unlock();
 }
