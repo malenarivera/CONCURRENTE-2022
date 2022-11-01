@@ -72,7 +72,7 @@ public void entrarJubilado(){
 }
 
 public void notificarTemperatura (int temp){
-  //IGUAL ESTO ME TIRA ERROR DE MONITOR Y RE Q SON LOCKS ???? PERO BUENO CADA UNO A ESTA ALTURA DEL AÑO HACE LO Q QUIERE
+  mutexEntrar.lock();
     if(temp>tUmbral){
         System.out.println("Se paso el umbral, cambio la cant personas a 35");
         cantMaxPersonas=35;
@@ -85,6 +85,7 @@ public void notificarTemperatura (int temp){
         normal.signalAll();
     }
     System.out.println("La temperatura Actual es de: "+temp);
+  mutexEntrar.unlock();
 }
 
 }
