@@ -20,6 +20,15 @@ public class GestionTrafico {
    private int cantCochesCruzaronDelSur;
     private int cantCochesCruzandoSur;
     
+    public GestionTrafico(){
+        cantCochesCruzandoNorte=0;
+        cantCochesCruzandoSur=0;
+        cantCochesEsperandoNorte=0;
+        cantCochesEsperandoSur=0;
+        cantCochesCruzaronDelNorte=0;
+        cantCochesCruzaronDelSur=0;
+    }
+    
  
     public synchronized void entrarCocheSur(){
         while(cantCochesCruzandoNorte>0||(cantCochesCruzaronDelSur>=10&&cantCochesEsperandoNorte>0)){
@@ -31,7 +40,11 @@ public class GestionTrafico {
             }
         }
         System.out.println(Thread.currentThread().getName()+": Cruzando desde el sur");
-        cantCochesEsperandoSur--;
+       //porque sino toma valores negativos y f
+        if(cantCochesEsperandoSur>0){
+            cantCochesCruzaronDelNorte=0;
+            cantCochesEsperandoSur--;
+        }
         cantCochesCruzandoSur++;
         cantCochesCruzaronDelSur++;
     }
@@ -40,7 +53,6 @@ public class GestionTrafico {
         System.out.println(Thread.currentThread().getName()+": Salio del punte desde el sur");
         cantCochesCruzandoSur--;
         if(cantCochesCruzandoSur==0){
-            cantCochesCruzaronDelSur=0;
             this.notifyAll();
     }
     }
@@ -55,7 +67,11 @@ public class GestionTrafico {
             }
         }
         System.out.println(Thread.currentThread().getName()+": Cruzando desde el norte");
-        cantCochesEsperandoNorte--;
+        //sino toma valores negativos y f
+        if(cantCochesEsperandoNorte>0){
+            cantCochesCruzaronDelSur=0;
+            cantCochesEsperandoNorte--;
+        }
         cantCochesCruzandoNorte++;
         cantCochesCruzaronDelNorte++;
     }
@@ -64,7 +80,6 @@ public class GestionTrafico {
         System.out.println(Thread.currentThread().getName()+": Salio del punte desde el norte");
         cantCochesCruzandoNorte--;
         if(cantCochesCruzandoNorte==0){
-            cantCochesCruzaronDelNorte=0;
              this.notifyAll();
     }
     }
