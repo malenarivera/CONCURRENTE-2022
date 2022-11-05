@@ -16,39 +16,57 @@ import java.util.logging.Logger;
  * @author male_
  */
 public class Centro {
-    private ReentrantLock mutex= new ReentrantLock();
-    private Condition esperaCamilla= mutex.newCondition();
-    private Condition esperaRevista= mutex.newCondition();
-    private int cantCamillasLibres;
-    private int cantRevistasLibres;
-    private int cantSillasSalaEsperaLibres;
+    private ReentrantLock mutexEntrar = new ReentrantLock();
+    private Condition esperarCamilla= mutexEntrar.newCondition();
+    private Condition esperarRevista= mutexEntrar.newCondition();
+    private int cantRevistas=9;
+    private int cantCamillas=4;
+    private int cantCamillasOcupadas=0;
+    private int cantRevistasOcupadas=0;
     
-    public Centro(int cantSillasSalaEspera){
-        cantCamillasLibres=4;
-        cantRevistasLibres=9;
-        this.cantSillasSalaEsperaLibres= cantSillasSalaEspera;
-    }
     
-    public void entrar(){
-        mutex.lock();
-        if(cantCamillasLibres==0){
-            if(cantSillasSalaEsperaLibres==0){
-                System.out.println(Thread.currentThread().getName()+": Espera parado");
+    public void entrarSala(){
+        mutexEntrar.lock();
+        boolean tieneRevista=false;
+        while(cantCamillasOcupadas>=cantCamillas){
+            tieneRevista=true;
+            this.irSalaEspera();
+            try {
+                esperarCamilla.await();
+            } catch (InterruptedException ex) {
             }
-            if(cantRevistasLibres==0){
-                System.out.println(Thread.currentThread().getName()+": Mira tele mientras espera una revista");
-                try {
-                    esperaRevista.await();
-                } catch (InterruptedException ex) {
-                }
-                
-            }else{
-                System.out.println(Thread.currentThread().getName()+": Espera leyendo la revista");
-                cantRevistasLibres--;
-            }
-                
-                
+            
         }
+        if(tieneRevista)
+            this.dejarRevista();
+        cantCamillasOcupadas++;
+        mutexEntrar.unlock();
     }
     
+    private void irSalaEspera(){
+        
+        while(cantRevistasOcupadas>=cantRevistas){
+            System.out.println(Thread.currentThread().getName()+": Espero por la camilla mientras miro tele");
+            try {
+                esperarRevista.await();
+            } catch (InterruptedException ex) {
+            }
+        }
+        System.out.println(Thread.currentThread().getName()+": Espero por la camilla mientras leo una revista");
+        cantRevistasOcupadas++;
+    }
+    
+    public void salirSala(){
+        mutexEntrar.lock();
+        System.out.println(Thread.currentThread().getName()+": Me voy");
+        cantCamillasOcupadas--;
+        esperarCamilla.signal();
+        mutexEntrar.unlock();
+    }
+    
+    private void dejarRevista(){
+        System.out.println(Thread.currentThread().getName()+": hay una camilla libre, dejo mi revista");
+        cantRevistasOcupadas--;
+        esperarRevista.signal();
+    }
 }
