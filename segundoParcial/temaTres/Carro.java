@@ -18,7 +18,7 @@ public class Carro {
     private Semaphore puedeArrancar; //para avisarle a la mr que puede empezar
     private Semaphore bajarse; //para q no se bajen hasta q termine la atraccion
     private int cantLugares; 
-    private Semaphore cantVueltas; //para que la atraccion se cierre cuendo ya se dieron las 3 vueltas
+    private Semaphore cantVueltas; //para que la atraccion se cierre cuendo ya se dieron las vueltas
     
     public Carro(int cantAsientos, int cantMaxVueltas){
         this.cantLugares=cantAsientos;
